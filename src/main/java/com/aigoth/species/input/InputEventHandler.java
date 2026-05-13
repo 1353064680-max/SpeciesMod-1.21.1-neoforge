@@ -1,6 +1,5 @@
 package com.aigoth.species.input;
 
-import com.aigoth.species.SpeciesMod;
 import com.aigoth.species.network.PacketHandler;
 import com.aigoth.species.network.TogglePotionEffectsPacket;
 import net.minecraft.client.Minecraft;

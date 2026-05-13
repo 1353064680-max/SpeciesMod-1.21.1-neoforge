@@ -27,6 +27,12 @@ public class PlayerSpeciesData {
     }
 
     public static void setPlayerRace(UUID playerUUID, String raceId) {
+        // 防止传入null UUID
+        if (playerUUID == null) {
+            LOGGER.warn("Attempted to set player race with null UUID, ignoring");
+            return;
+        }
+        
         lock.writeLock().lock();
         try {
             PLAYER_RACE_DATA.put(playerUUID, raceId);
@@ -46,6 +52,12 @@ public class PlayerSpeciesData {
     }
 
     public static void removePlayerRace(UUID playerUUID) {
+        // 防止传入null UUID
+        if (playerUUID == null) {
+            LOGGER.warn("Attempted to remove player race with null UUID, ignoring");
+            return;
+        }
+        
         lock.writeLock().lock();
         try {
             PLAYER_RACE_DATA.remove(playerUUID);
@@ -96,7 +108,12 @@ public class PlayerSpeciesData {
             
             Map<String, String> data = new HashMap<>();
             for (Map.Entry<UUID, String> entry : PLAYER_RACE_DATA.entrySet()) {
-                data.put(entry.getKey().toString(), entry.getValue());
+                // 防御性检查：跳过null键或null值
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    data.put(entry.getKey().toString(), entry.getValue());
+                } else {
+                    LOGGER.warn("Skipping invalid player species data entry with null key or value");
+                }
             }
 
             try (Writer writer = new FileWriter(dataFile.toFile())) {

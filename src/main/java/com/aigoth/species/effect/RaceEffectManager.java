@@ -1,6 +1,5 @@
 package com.aigoth.species.effect;
 
-import com.aigoth.species.SpeciesMod;
 import com.aigoth.species.race.Race;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

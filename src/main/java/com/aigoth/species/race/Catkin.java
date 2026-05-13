@@ -6,8 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 
-import java.util.UUID;
-
 public class Catkin extends Race {
     public Catkin() {
         super("catkin", Component.translatable("race.species.catkin"),

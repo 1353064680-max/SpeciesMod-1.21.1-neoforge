@@ -7,7 +7,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 
 public class SlimekinEventHandler {
 

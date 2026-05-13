@@ -1,16 +1,13 @@
 package com.aigoth.species.event;
 
-import com.aigoth.species.SpeciesMod;
 import com.aigoth.species.capability.PlayerSpeciesCapability;
 import com.aigoth.species.capability.PlayerSpeciesImpl;
 import com.aigoth.species.data.PlayerSpeciesData;
 import com.aigoth.species.network.OpenRaceSelectionPacket;
-import com.aigoth.species.network.PacketHandler;
 import com.aigoth.species.race.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;

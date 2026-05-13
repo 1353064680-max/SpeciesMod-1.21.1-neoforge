@@ -46,11 +46,8 @@ public class PlayerSpeciesImpl implements PlayerSpecies {
                 PlayerSpeciesData.removePlayerRace(playerRef.getUUID());
             }
         }
-        // 如果没有玩家引用但在服务端环境中，也尝试保存数据
-        else if (race != null && net.neoforged.fml.loading.FMLEnvironment.dist.isDedicatedServer()) {
-            // 在专用服务器环境中，确保数据被保存
-            PlayerSpeciesData.setPlayerRace(playerRef != null ? playerRef.getUUID() : null, race.getRaceId());
-        }
+        // 注意：如果没有玩家引用，无法保存数据，因为缺少有效的UUID
+        // 在专用服务器环境中，玩家数据应该通过玩家对象来保存
     }
 
     @Override

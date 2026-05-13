@@ -6,8 +6,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-import java.util.UUID;
-
 public class Cursed extends Race {
     public Cursed() {
         super("cursed", Component.translatable("race.species.cursed"),

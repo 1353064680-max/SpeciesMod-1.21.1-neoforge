@@ -5,8 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-import java.util.UUID;
-
 public class Plantkin extends Race {
     public Plantkin() {
         super("plantkin", Component.translatable("race.species.plantkin"),

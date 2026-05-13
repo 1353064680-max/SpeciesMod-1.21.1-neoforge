@@ -1,6 +1,5 @@
 package com.aigoth.species.event;
 
-import com.aigoth.species.SpeciesMod;
 import com.aigoth.species.capability.PlayerSpeciesCapability;
 import com.aigoth.species.capability.PlayerSpeciesImpl;
 import com.aigoth.species.effect.RaceEffectManager;

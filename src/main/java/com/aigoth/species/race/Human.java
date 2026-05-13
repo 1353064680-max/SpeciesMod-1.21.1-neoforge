@@ -6,8 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 
-import java.util.UUID;
-
 public class Human extends Race {
     public Human() {
         super("human", Component.translatable("race.species.human"),
