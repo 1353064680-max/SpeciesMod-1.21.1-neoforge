@@ -38,15 +38,22 @@ public class RaceEventHandler {
         
         switch (raceId) {
             case "catkin":
-                CatkinEventHandler.handleFallDamage(event.getEntity(), event.getDistance(), event.getDamageMultiplier());
+                // 猫族：8格以下免疫
+                if (event.getDistance() <= 8.0f) {
+                    event.setCanceled(true);
+                }
                 break;
                 
             case "slimekin":
-                SlimekinEventHandler.handleFallDamage(event.getEntity(), event.getDistance(), event.getDamageMultiplier());
+                // 史莱姆族：完全免疫摔落伤害
+                event.setCanceled(true);
                 break;
                 
             case "aigoth":
-                AigothEventHandler.handleFallDamage(event.getEntity(), event.getDistance(), event.getDamageMultiplier());
+                // 人鱼猫族：8格以下免疫
+                if (event.getDistance() <= 8.0f) {
+                    event.setCanceled(true);
+                }
                 break;
                 
             default:
@@ -62,9 +69,12 @@ public class RaceEventHandler {
     public static void onLivingHurt(LivingDamageEvent.Pre event) {
         if (event.getEntity() instanceof Player player) {
             PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            
             // 狐族免疫浆果丛伤害
             if (cap.hasSelectedRace() && "foxkin".equals(cap.getSelectedRace().getRaceId())) {
-                if (event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FALL)) {
+                // 在 1.21.1 中，通过 DamageSource 的 msgId 或注册 ID 判断
+                // 尝试使用 is 方法检查标签（如果存在）或直接比对 ID
+                if (event.getSource().is(net.minecraft.world.damagesource.DamageTypes.SWEET_BERRY_BUSH)) {
                     event.setNewDamage(0);
                     return;
                 }

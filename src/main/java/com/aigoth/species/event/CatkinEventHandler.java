@@ -23,12 +23,12 @@ public class CatkinEventHandler {
     
     // 当实体加入世界时，为苦力怕添加避开猫族玩家的目标
     public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
-        // 检查是否是苦力怕并且不是客户端世界
-        if (event.getEntity() instanceof Creeper creeper && !event.getLevel().isClientSide()) {
-            // 为苦力怕添加避开猫族玩家的AI目标
-            // 与猫的实现类似，苦力怕会避开猫族玩家（距离10格内，逃离速度1.5）
-            creeper.goalSelector.addGoal(2, new AvoidEntityGoal<>(creeper, Player.class, 10.0F, 1.5D, 1.5D,
-                entity -> entity instanceof Player && isCatkinPlayer((Player) entity)));
+        if (event.getLevel().isClientSide()) return;
+
+        if (event.getEntity() instanceof Creeper creeper) {
+            // 原版猫驱散苦力怕的逻辑：半径 6 格，速度倍数 1.5, 1.5
+            creeper.goalSelector.addGoal(3, new AvoidEntityGoal<>(creeper, Player.class, 6.0F, 1.5D, 1.5D,
+                entity -> isCatkinPlayer((Player) entity)));
         }
     }
     

@@ -23,7 +23,7 @@
   "race.species.slimekin.desc": "+Jump Boost III, +Slowness I to Enemies, +Immune to Fall Damage, -Weakness in Badlands, -2.0 Max Health",
   "race.species.elf": "Elf",
   "race.species.elf.short_desc": "Graceful race",
-  "race.species.elf.desc": "+1.5 Ranged Damage, +Speed II when Hurt, -2.0 Max Health, -2.0 Melee Damage, -2.0 Armor",
+  "race.species.elf.desc": "+x2.0 Ranged Damage, +Speed II when Hurt, -2.0 Max Health, -2.0 Melee Damage, -2.0 Armor",
   "race.species.plantkin": "Plantkin",
   "race.species.plantkin.short_desc": "Plant-based race",
   "race.species.plantkin.desc": "+2 Hearts, +Regeneration I and Saturation in Light, -Weakness in Dark, -Double Fire Damage",

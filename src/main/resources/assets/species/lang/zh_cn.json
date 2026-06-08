@@ -23,7 +23,7 @@
   "race.species.slimekin.desc": "+击退抗性,+跳跃提升,+攻击附带缓慢,+免疫摔落伤害,-在干旱群系减益,-2.0最大生命值",
   "race.species.elf": "精灵族",
   "race.species.elf.short_desc": "优雅的种族",
-  "race.species.elf.desc": "+1.5远程伤害,+受伤加速,-4.0最大生命值,-2.0近战伤害,-2.0护甲值",
+  "race.species.elf.desc": "+x2.0远程伤害,+受伤加速,-4.0最大生命值,-2.0近战伤害,-2.0护甲值",
   "race.species.plantkin": "植物族",
   "race.species.plantkin.short_desc": "植物性种族",
   "race.species.plantkin.desc": "+击退抗性,+4.0最大生命值,+在白天光明中增益,-在夜晚黑暗中减益,-受到火焰伤害翻倍",

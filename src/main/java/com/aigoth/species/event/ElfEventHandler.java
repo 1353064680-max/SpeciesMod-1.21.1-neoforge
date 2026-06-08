@@ -36,7 +36,7 @@ public class ElfEventHandler {
         }
     }
     
-    // 处理精灵族箭矢无重力和力量加成
+    // 处理精灵族箭矢伤害翻倍
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         // 检查是否为箭矢实体
         if (event.getEntity() instanceof AbstractArrow arrow) {
@@ -44,8 +44,8 @@ public class ElfEventHandler {
             if (arrow.getOwner() instanceof Player player) {
                 PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
                 if (cap.hasSelectedRace() && "elf".equals(cap.getSelectedRace().getRaceId())) {
-                    // 设置伤害加成
-                    arrow.setBaseDamage(arrow.getBaseDamage() + 1.5);
+                    // 将基础伤害翻倍（倍率加成）
+                    arrow.setBaseDamage(arrow.getBaseDamage() * 2.0);
                 }
             }
         }
