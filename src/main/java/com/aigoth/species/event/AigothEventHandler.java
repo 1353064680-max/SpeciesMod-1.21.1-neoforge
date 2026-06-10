@@ -38,6 +38,7 @@ public class AigothEventHandler {
         if (event.getLevel().isClientSide()) return;
 
         if (event.getEntity() instanceof Creeper creeper) {
+            // 借鉴 Artifacts 方案：除了事件拦截外，保留 AI 目标以实现主动规避视觉效果
             // 原版猫驱散苦力怕的逻辑：半径 6 格，速度倍数 1.5, 1.5
             creeper.goalSelector.addGoal(3, new AvoidEntityGoal<>(creeper, Player.class, 6.0F, 1.5D, 1.5D,
                 entity -> isAigothPlayer((Player) entity)));

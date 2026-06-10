@@ -25,6 +25,11 @@ public class PacketHandler {
         registrar.playToServer(TogglePotionEffectsPacket.TYPE,
             TogglePotionEffectsPacket.STREAM_CODEC,
             TogglePotionEffectsPacket::handle);
+        
+        // 注册二段跳请求包
+        registrar.playToServer(DoubleJumpRequestPacket.TYPE,
+            DoubleJumpRequestPacket.STREAM_CODEC,
+            DoubleJumpRequestPacket::handle);
     }
     
     // 添加静态方法用于发送数据包

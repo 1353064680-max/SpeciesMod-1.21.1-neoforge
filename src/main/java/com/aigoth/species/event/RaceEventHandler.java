@@ -5,6 +5,7 @@ import com.aigoth.species.capability.PlayerSpeciesImpl;
 import com.aigoth.species.effect.RaceEffectManager;
 import com.aigoth.species.race.*;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,6 +14,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 
@@ -154,6 +156,9 @@ public class RaceEventHandler {
             // 犬族饱食度消耗逻辑
             DogkinEventHandler.onPlayerTick(player);
             
+            // 猫族/人鱼猫族二段跳落地重置逻辑（服务端）
+            resetDoubleJumpOnLand(player);
+
             // 羽兽族在水中的效果（常驻效果）
             if (player.tickCount % 20 == 0) {
                 PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
@@ -164,6 +169,20 @@ public class RaceEventHandler {
         }
     }
     
+    private static void resetDoubleJumpOnLand(Player player) {
+        if (player.level().isClientSide) return;
+        if (!player.onGround()) return;
+        
+        PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+        if (!cap.hasSelectedRace()) return;
+        
+        String raceId = cap.getSelectedRace().getRaceId();
+        if (!"catkin".equals(raceId) && !"aigoth".equals(raceId) && !"wingedbeast".equals(raceId)) return;
+        
+        com.aigoth.species.network.DoubleJumpRequestPacket.resetOnLand(player.getUUID());
+    }
+
+
     // ================================
     // 睡眠事件处理
     // ================================
@@ -178,6 +197,48 @@ public class RaceEventHandler {
         }
     }
     
+    // ================================
+    // 目标选择事件处理 (借鉴 Artifacts 方案)
+    // ================================
+    
+    @SubscribeEvent
+    public static void onLivingChangeTarget(LivingChangeTargetEvent event) {
+        // 仅在服务端处理，确保权威性
+        if (event.getEntity().level().isClientSide) return;
+
+        if (event.getEntity() instanceof net.minecraft.world.entity.monster.Creeper) {
+            if (event.getNewAboutToBeSetTarget() instanceof Player player) {
+                PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+                if (cap.hasSelectedRace() && ("catkin".equals(cap.getSelectedRace().getRaceId()) || "aigoth".equals(cap.getSelectedRace().getRaceId()))) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    // ================================
+    // 幻翼驱散逻辑 (借鉴 Artifacts 方案)
+    // ================================
+    
+    @SubscribeEvent
+    public static void onPhantomTick(EntityTickEvent.Pre event) {
+        // 仅在服务端处理
+        if (event.getEntity().level().isClientSide) return;
+
+        if (event.getEntity() instanceof Phantom phantom) {
+            LivingEntity target = phantom.getTarget();
+            if (target instanceof Player player && phantom.distanceToSqr(player) < 256.0) { // 16格半径
+                PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+                if (cap.hasSelectedRace() && ("catkin".equals(cap.getSelectedRace().getRaceId()) || "aigoth".equals(cap.getSelectedRace().getRaceId()))) {
+                    // 播放猫叫嘶吼声并清除目标
+                    phantom.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
+                        net.minecraft.sounds.SoundEvents.CAT_HISS, player.getSoundSource(), 1.0F, 1.0F);
+                    phantom.setTarget(null);
+                }
+            }
+        }
+    }
+
     // ================================
     // 实体生成事件处理
     // ================================
