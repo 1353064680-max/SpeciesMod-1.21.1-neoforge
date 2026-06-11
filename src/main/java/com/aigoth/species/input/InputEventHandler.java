@@ -2,6 +2,7 @@ package com.aigoth.species.input;
 
 import com.aigoth.species.network.DoubleJumpRequestPacket;
 import com.aigoth.species.network.PacketHandler;
+import com.aigoth.species.network.SkillActivationPacket;
 import com.aigoth.species.network.TogglePotionEffectsPacket;
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,6 +18,12 @@ public class InputEventHandler {
         if (mc.player != null && KeyBindings.TOGGLE_POTION_EFFECTS.consumeClick()) {
             // 发送数据包到服务端处理
             PacketHandler.sendToServer(new TogglePotionEffectsPacket());
+        }
+        
+        // 检查是否按下了技能激活按键
+        if (mc.player != null && mc.screen == null && KeyBindings.ACTIVATE_SKILL.consumeClick()) {
+            // 发送技能激活请求到服务端
+            PacketHandler.sendToServer(new SkillActivationPacket());
         }
         
         // 检测二段跳输入

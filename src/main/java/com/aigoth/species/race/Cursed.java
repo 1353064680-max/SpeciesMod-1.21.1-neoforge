@@ -2,7 +2,6 @@ package com.aigoth.species.race;
 
 import com.aigoth.species.SpeciesMod;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
@@ -10,20 +9,10 @@ public class Cursed extends Race {
     public Cursed() {
         super("cursed", Component.translatable("race.species.cursed"),
               Component.translatable("race.species.cursed.short_desc"),
-              createDescription(),
               Component.translatable("race.species.cursed.benefits"),
-              Component.translatable("race.species.cursed.drawbacks"));
-    }
-
-    private static MutableComponent createDescription() {
-        // 创建警告文本（红色加粗）
-        MutableComponent warning = Component.translatable("race.species.cursed.warning");
-        
-        // 创建特性描述文本
-        MutableComponent description = Component.translatable("race.species.cursed.desc");
-        
-        // 组合文本
-        return Component.empty().append(description).append("\n").append(warning);
+              Component.translatable("race.species.cursed.drawbacks"),
+              Component.translatable("skill.species.cursed.name"),
+              Component.translatable("skill.species.cursed.description"));
     }
 
     @Override

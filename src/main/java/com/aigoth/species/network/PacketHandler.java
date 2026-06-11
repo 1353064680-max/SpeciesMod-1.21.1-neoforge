@@ -30,6 +30,11 @@ public class PacketHandler {
         registrar.playToServer(DoubleJumpRequestPacket.TYPE,
             DoubleJumpRequestPacket.STREAM_CODEC,
             DoubleJumpRequestPacket::handle);
+        
+        // 注册技能激活请求包
+        registrar.playToServer(SkillActivationPacket.TYPE,
+            SkillActivationPacket.STREAM_CODEC,
+            SkillActivationPacket::handle);
     }
     
     // 添加静态方法用于发送数据包

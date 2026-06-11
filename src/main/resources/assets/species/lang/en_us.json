@@ -48,6 +48,7 @@
   "species.potion_effects_disabled": "Racial potion effects disabled",
   "key.category.species.species": "Species Mod",
   "key.species.toggle_potion_effects": "Toggle Racial Potion Effects",
+  "key.species.activate_skill": "Activate Racial Skill",
   "species.wingedbeast.lay_egg": "You laid an egg!",
   
   "itemGroup.species.species": "Race Selection",
@@ -69,5 +70,12 @@
   "item.species.race_stone.tooltip": "Right-click to select %s race",
   "item.species.race_stone.set_race": "You have become a member of the %s race",
   "item.species.race_stone.invalid_race": "Cannot set this race",
-  "item.species.race_stone.egg_tooltip": "This is an Easter egg race that cannot be selected via items"
+  "item.species.race_stone.egg_tooltip": "This is an Easter egg race that cannot be selected via items",
+  
+  "skill.species.on_cooldown": "§cSkill on cooldown! %d seconds remaining",
+  "skill.species.activated": "§a%s activated!",
+  "skill.species.no_resource_health": "§cNot enough health to use skill!",
+  
+  "skill.species.catkin.name": "Hiss",
+  "skill.species.catkin.description": "'Hiss!'"
 }

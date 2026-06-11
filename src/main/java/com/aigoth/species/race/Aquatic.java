@@ -9,9 +9,10 @@ public class Aquatic extends Race {
     public Aquatic() {
         super("aquatic", Component.translatable("race.species.aquatic"), 
               Component.translatable("race.species.aquatic.short_desc"),
-              Component.translatable("race.species.aquatic.desc"),
               Component.translatable("race.species.aquatic.benefits"),
-              Component.translatable("race.species.aquatic.drawbacks"));
+              Component.translatable("race.species.aquatic.drawbacks"),
+              Component.translatable("skill.species.aquatic.name"),
+              Component.translatable("skill.species.aquatic.description"));
     }
 
     @Override

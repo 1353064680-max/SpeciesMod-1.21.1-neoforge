@@ -9,9 +9,10 @@ public class Plantkin extends Race {
     public Plantkin() {
         super("plantkin", Component.translatable("race.species.plantkin"),
               Component.translatable("race.species.plantkin.short_desc"),
-              Component.translatable("race.species.plantkin.desc"),
               Component.translatable("race.species.plantkin.benefits"),
-              Component.translatable("race.species.plantkin.drawbacks"));
+              Component.translatable("race.species.plantkin.drawbacks"),
+              Component.translatable("skill.species.plantkin.name"),
+              Component.translatable("skill.species.plantkin.description"));
     }
 
     @Override

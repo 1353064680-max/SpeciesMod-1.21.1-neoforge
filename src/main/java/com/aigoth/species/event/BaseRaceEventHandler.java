@@ -118,8 +118,14 @@ public class BaseRaceEventHandler {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
+        
+        // 每秒更新一次技能冷却和种族效果
         if (player.tickCount % 20 == 0) {
             PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            
+            // 更新技能冷却时间
+            cap.updateCooldowns();
+            
             if (cap.hasSelectedRace()) {
                 Race race = cap.getSelectedRace();
                 race.applyEffects(player);

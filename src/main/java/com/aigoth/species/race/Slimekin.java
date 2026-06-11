@@ -9,9 +9,10 @@ public class Slimekin extends Race {
     public Slimekin() {
         super("slimekin", Component.translatable("race.species.slimekin"),
               Component.translatable("race.species.slimekin.short_desc"),
-              Component.translatable("race.species.slimekin.desc"),
               Component.translatable("race.species.slimekin.benefits"),
-              Component.translatable("race.species.slimekin.drawbacks"));
+              Component.translatable("race.species.slimekin.drawbacks"),
+              Component.translatable("skill.species.slimekin.name"),
+              Component.translatable("skill.species.slimekin.description"));
     }
 
     @Override

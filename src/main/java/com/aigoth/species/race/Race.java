@@ -15,26 +15,30 @@ public abstract class Race {
     protected final String raceId;
     protected final Component raceName;
     protected final Component shortDescription;
-    protected final Component fullDescription;
     protected final Component benefitsDescription;
     protected final Component drawbacksDescription;
+    protected final Component skillName;
+    protected final Component skillDescription;
     // 属性修饰符存储（属性名 -> 修饰符）
     protected final Map<ResourceLocation, AttributeModifier> attributeModifiers = new HashMap<>();
 
-    public Race(String raceId, Component raceName, Component shortDescription, Component fullDescription, 
-                Component benefitsDescription, Component drawbacksDescription) {
+    public Race(String raceId, Component raceName, Component shortDescription,
+                Component benefitsDescription, Component drawbacksDescription,
+                Component skillName, Component skillDescription) {
         this.raceId = raceId;
         this.raceName = raceName;
         this.shortDescription = shortDescription;
-        this.fullDescription = fullDescription;
         this.benefitsDescription = benefitsDescription;
         this.drawbacksDescription = drawbacksDescription;
+        this.skillName = skillName;
+        this.skillDescription = skillDescription;
         initAttributes();
     }
     
     // 兼容旧版本构造函数
     public Race(String raceId, Component raceName, Component description) {
-        this(raceId, raceName, Component.literal(""), description, Component.literal(""), Component.literal(""));
+        this(raceId, raceName, Component.literal(""), Component.literal(""), Component.literal(""),
+             Component.literal(""), Component.literal(""));
     }
 
     // 初始化种族属性（子类实现）
@@ -79,7 +83,15 @@ public abstract class Race {
     public String getRaceId() { return raceId; }
     public Component getRaceName() { return raceName; }
     public Component getShortDescription() { return shortDescription; }
-    public Component getFullDescription() { return fullDescription; }
     public Component getBenefitsDescription() { return benefitsDescription; }
     public Component getDrawbacksDescription() { return drawbacksDescription; }
+    public Component getSkillName() { return skillName; }
+    public Component getSkillDescription() { return skillDescription; }
+    
+    // 技能相关抽象方法
+    public boolean hasActiveSkill() { return false; }
+    public int getSkillCooldownTicks() { return 0; }
+    public float getHealthCost() { return 0; }
+    public float getFoodExhaustion() { return 0; }
+    public void executeSkill(net.minecraft.server.level.ServerPlayer player) {}
 }

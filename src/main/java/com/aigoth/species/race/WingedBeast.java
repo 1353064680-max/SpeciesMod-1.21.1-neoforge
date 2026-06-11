@@ -9,9 +9,10 @@ public class WingedBeast extends Race {
     public WingedBeast() {
         super("wingedbeast", Component.translatable("race.species.wingedbeast"),
               Component.translatable("race.species.wingedbeast.short_desc"),
-              Component.translatable("race.species.wingedbeast.desc"),
               Component.translatable("race.species.wingedbeast.benefits"),
-              Component.translatable("race.species.wingedbeast.drawbacks"));
+              Component.translatable("race.species.wingedbeast.drawbacks"),
+              Component.translatable("skill.species.wingedbeast.name"),
+              Component.translatable("skill.species.wingedbeast.description"));
     }
 
     @Override

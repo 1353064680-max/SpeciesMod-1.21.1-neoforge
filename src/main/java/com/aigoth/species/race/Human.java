@@ -10,9 +10,10 @@ public class Human extends Race {
     public Human() {
         super("human", Component.translatable("race.species.human"),
               Component.translatable("race.species.human.short_desc"),
-              Component.translatable("race.species.human.desc"),
               Component.translatable("race.species.human.benefits"),
-              Component.translatable("race.species.human.drawbacks"));
+              Component.translatable("race.species.human.drawbacks"),
+              Component.literal(""), // 人族没有主动技能
+              Component.literal(""));
     }
 
     @Override

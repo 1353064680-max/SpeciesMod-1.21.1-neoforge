@@ -10,6 +10,9 @@ public class PlayerSpeciesImpl implements PlayerSpecies {
     private Race selectedRace = null;
     private Player playerRef = null; // 保存玩家引用用于数据存储
     private boolean racialEffectsEnabled = true; // 种族效果开关状态，默认开启
+    
+    // 技能冷却时间管理 (种族ID -> 剩余tick)
+    private final java.util.Map<String, Integer> skillCooldowns = new java.util.HashMap<>();
 
     public void setPlayerReference(Player player) {
         this.playerRef = player;
@@ -99,5 +102,33 @@ public class PlayerSpeciesImpl implements PlayerSpecies {
             // 如果配置中设置了默认值，则使用配置的默认值
             racialEffectsEnabled = Config.enableRacialPotionEffectsByDefault.get();
         }
+    }
+    
+    // 技能冷却相关方法
+    public boolean canUseSkill(String raceId) {
+        Integer cooldown = skillCooldowns.get(raceId);
+        return cooldown == null || cooldown <= 0;
+    }
+    
+    public void setSkillCooldown(String raceId, int ticks) {
+        skillCooldowns.put(raceId, ticks);
+    }
+    
+    public long getSkillCooldownRemaining(String raceId) {
+        Integer cooldown = skillCooldowns.get(raceId);
+        return cooldown != null && cooldown > 0 ? cooldown : 0;
+    }
+    
+    // 在每个 tick 更新冷却时间（由 BaseRaceEventHandler 调用，每秒执行一次）
+    public void updateCooldowns() {
+        // 每秒减少 1（因为该方法每秒被调用一次）
+        skillCooldowns.replaceAll((raceId, cooldown) -> {
+            if (cooldown > 0) {
+                return cooldown - 1;
+            }
+            return cooldown;
+        });
+        // 移除已完成的冷却
+        skillCooldowns.entrySet().removeIf(entry -> entry.getValue() <= 0);
     }
 }

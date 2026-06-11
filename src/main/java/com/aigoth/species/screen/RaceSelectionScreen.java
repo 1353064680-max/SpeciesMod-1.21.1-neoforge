@@ -173,6 +173,40 @@ public class RaceSelectionScreen extends Screen {
                     descriptionStartY += font.lineHeight + 2;
                 }
             }
+            
+            // 绘制技能信息（如果有主动技能）
+            if (currentRace.hasActiveSkill()) {
+                descriptionStartY += 8; // 与减益效果的间距
+                
+                // 绘制技能标题
+                guiGraphics.drawCenteredString(font, Component.literal("主动技能:"), width / 2, descriptionStartY, 0xFFFF00);
+                descriptionStartY += 12;
+                
+                // 绘制技能名称
+                Component skillName = currentRace.getSkillName();
+                if (skillName != null && !skillName.getString().isEmpty()) {
+                    List<FormattedCharSequence> nameLines = font.split(skillName, descriptionBoxInnerWidth);
+                    for (FormattedCharSequence line : nameLines) {
+                        int lineWidth = font.width(line);
+                        int lineX = descriptionBoxX + DESCRIPTION_BOX_PADDING + (descriptionBoxInnerWidth - lineWidth) / 2;
+                        guiGraphics.drawString(font, line, lineX, descriptionStartY, 0x55FFFF, false); // 青色
+                        descriptionStartY += font.lineHeight + 2;
+                    }
+                }
+                
+                // 绘制技能描述
+                Component skillDesc = currentRace.getSkillDescription();
+                if (skillDesc != null && !skillDesc.getString().isEmpty()) {
+                    descriptionStartY += 4;
+                    List<FormattedCharSequence> descLines = font.split(skillDesc, descriptionBoxInnerWidth);
+                    for (FormattedCharSequence line : descLines) {
+                        int lineWidth = font.width(line);
+                        int lineX = descriptionBoxX + DESCRIPTION_BOX_PADDING + (descriptionBoxInnerWidth - lineWidth) / 2;
+                        guiGraphics.drawString(font, line, lineX, descriptionStartY, 0xAAAAAA, false); // 灰色
+                        descriptionStartY += font.lineHeight + 2;
+                    }
+                }
+            }
         }
     }
     

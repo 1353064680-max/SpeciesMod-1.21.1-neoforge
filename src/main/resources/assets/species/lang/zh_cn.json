@@ -6,7 +6,7 @@
   "race.species.human.drawbacks": "无显著减益",
   "race.species.catkin": "猫族",
   "race.species.catkin.short_desc": "敏捷的猫科种族",
-  "race.species.catkin.benefits": "+速度, +夜视, +摔落高度阈值, +二段跳, +驱散苦力怕",
+  "race.species.catkin.benefits": "+速度, +夜视, +摔落高度阈值, +二段跳, +哈气",
   "race.species.catkin.drawbacks": "-2.0 最大生命值, -4.0 攻击伤害, -0.5 攻击速度",
   "race.species.dogkin": "犬族",
   "race.species.dogkin.short_desc": "忠诚的犬科种族",
@@ -48,6 +48,7 @@
   "species.potion_effects_disabled": "§c种族能力已禁用",
   "key.category.species.species": "种族模组",
   "key.species.toggle_potion_effects": "切换种族能力",
+  "key.species.activate_skill": "激活种族技能",
   "species.wingedbeast.lay_egg": "§a你下了一个蛋！",
   
   "itemGroup.species.species": "种族",
@@ -69,5 +70,12 @@
   "item.species.race_stone.tooltip": "右键使用以选择%s种族",
   "item.species.race_stone.set_race": "§a你已成为%s种族的一员",
   "item.species.race_stone.invalid_race": "无法设置此种族",
-  "item.species.race_stone.egg_tooltip": "这是一个彩蛋种族，无法通过物品选择"
+  "item.species.race_stone.egg_tooltip": "这是一个彩蛋种族，无法通过物品选择",
+  
+  "skill.species.on_cooldown": "§c技能冷却中！剩余 %d 秒",
+  "skill.species.activated": "§a%s 已激活！",
+  "skill.species.no_resource_health": "§c生命值不足，无法使用技能！",
+  
+  "skill.species.catkin.name": "哈气",
+  "skill.species.catkin.description": "'哈！'"
 }
