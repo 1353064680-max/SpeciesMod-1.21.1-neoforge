@@ -21,10 +21,18 @@ public class Catkin extends Race {
         
         // 减少攻击伤害
         attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.attack_damage"), 
-            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "catkin_attack_damage_penalty"), -2.0, Operation.ADD_VALUE));
+            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "catkin_attack_damage_penalty"), -4.0, Operation.ADD_VALUE));
 
         // 增加速度
         attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.movement_speed"),
             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "catkin_speed_bonus"), 0.2, Operation.ADD_MULTIPLIED_TOTAL));
+        
+        // 增加摔落缓冲距离（8格以下免疫）
+        attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.safe_fall_distance"),
+            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "catkin_fall_resistance_bonus"), 8.0, Operation.ADD_VALUE));
+
+        // 减少攻击速度
+        attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.attack_speed"),
+            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "catkin_attack_speed_penalty"), -0.5, Operation.ADD_VALUE));
     }
 }

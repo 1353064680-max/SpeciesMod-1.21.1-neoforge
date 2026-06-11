@@ -21,5 +21,9 @@ public class Foxkin extends Race {
         // 增加移动速度
         attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.movement_speed"),
             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "foxkin_speed_bonus"), 0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
+        // 增加摔落缓冲
+        attributeModifiers.put(ResourceLocation.withDefaultNamespace("generic.safe_fall_distance"),
+            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(SpeciesMod.MOD_ID, "foxkin_fall_resistance_bonus"), 2.0, AttributeModifier.Operation.ADD_VALUE));
     }
 }

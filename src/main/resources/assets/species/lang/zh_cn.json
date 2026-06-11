@@ -5,7 +5,7 @@
   "race.species.human.desc": "*你充满了决心",
   "race.species.catkin": "猫族",
   "race.species.catkin.short_desc": "敏捷的猫科种族",
-  "race.species.catkin.desc": "+速度,+夜视,+摔落高度闸值,+二段跳,+哈气,-2.0最大生命值,-2.0攻击伤害",
+  "race.species.catkin.desc": "+速度,+夜视,+摔落高度闸值,+二段跳,+哈气,-2.0最大生命值,-4.0攻击伤害",
   "race.species.dogkin": "犬族",
   "race.species.dogkin.short_desc": "忠诚的犬科种族",
   "race.species.dogkin.desc": "+1.0攻击伤害,+驱散骷髅类生物,-消耗更多饱食度,+-根据月相增减益",
@@ -38,7 +38,7 @@
   "species.potion_effects_disabled": "§c种族能力已禁用",
   "key.category.species.species": "种族模组",
   "key.species.toggle_potion_effects": "切换种族能力",
-  "species.wingedbeast.lay_egg": "你下了一个蛋！",
+  "species.wingedbeast.lay_egg": "§a你下了一个蛋！",
   
   "itemGroup.species.species": "种族",
   

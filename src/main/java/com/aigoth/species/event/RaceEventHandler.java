@@ -12,56 +12,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
-import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 
 public class RaceEventHandler {
-    
-    // ================================
-    // 摔落事件处理
-    // ================================
-    
-    @SubscribeEvent
-    public static void onLivingFall(LivingFallEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
-            if (cap.hasSelectedRace() && cap.isRacialEffectsEnabled()) {
-                Race race = cap.getSelectedRace();
-                reduceFallDamageByRace(event, race);
-            }
-        }
-    }
-    
-    private static void reduceFallDamageByRace(LivingFallEvent event, Race race) {
-        String raceId = race.getRaceId();
-        
-        switch (raceId) {
-            case "catkin":
-                // 猫族：8格以下免疫
-                if (event.getDistance() <= 8.0f) {
-                    event.setCanceled(true);
-                }
-                break;
-                
-            case "slimekin":
-                // 史莱姆族：完全免疫摔落伤害
-                event.setCanceled(true);
-                break;
-                
-            case "aigoth":
-                // 人鱼猫族：8格以下免疫
-                if (event.getDistance() <= 8.0f) {
-                    event.setCanceled(true);
-                }
-                break;
-                
-            default:
-                break;
-        }
-    }
     
     // ================================
     // 受伤事件处理

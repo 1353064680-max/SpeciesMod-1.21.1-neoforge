@@ -38,13 +38,4 @@ public class CatkinEventHandler {
         PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
         return cap.hasSelectedRace() && "catkin".equals(cap.getSelectedRace().getRaceId());
     }
-    
-    public static void handleFallDamage(net.minecraft.world.entity.Entity entity, float distance, float multiplier) {
-        // 通过修改摔落距离来提高摔落伤害的起始高度阈值
-        // 原版阈值是3格，猫族增加到8格（增加5格）
-        // 如果摔落距离小于等于8格，则不造成伤害
-        if (distance <= 8.0f && entity instanceof net.minecraft.world.entity.LivingEntity livingEntity) {
-            livingEntity.fallDistance = 0;
-        }
-    }
 }

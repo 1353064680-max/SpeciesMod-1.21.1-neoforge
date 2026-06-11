@@ -29,9 +29,8 @@ public class AquaticEventHandler {
         if (player.isInWater()) {
             // 玩家在水中
             
-            // 立即移除虚弱和凋零效果（只移除种族给予的效果）
+            // 立即移除虚弱效果（只移除种族给予的效果）
             removeAquaticEffect(player, MobEffects.WEAKNESS);
-            removeAquaticEffect(player, MobEffects.WITHER);
             
             // 重置离水时间计时器
             OUT_OF_WATER_TIME.remove(playerUUID);
@@ -57,15 +56,14 @@ public class AquaticEventHandler {
                 
                 // 检查是否离水超过240秒(240000毫秒)
                 if (timeOutOfWater >= 240000) { // 240秒 = 240000毫秒
-                    // 应用缓慢II与挖掘疲劳II效果（持续200 ticks，即10秒）
-                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 1, false, false, false));
+                    // 应用虚弱III与挖掘疲劳II效果（持续200 ticks，即10秒）
+                    player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 2, false, false, false));
                     player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 1, false, false, false));
                 }
             }
             
             // 移除水中效果（只移除种族给予的效果）
             removeAquaticEffect(player, MobEffects.WATER_BREATHING);
-            removeAquaticEffect(player, MobEffects.DIG_SPEED);
             removeAquaticEffect(player, MobEffects.CONDUIT_POWER);
             removeAquaticEffect(player, MobEffects.DOLPHINS_GRACE);
         }
@@ -74,7 +72,6 @@ public class AquaticEventHandler {
     private static void applyWaterEffects(Player player) {
         // 水中效果不受种族药水效果开关控制，且不显示图标
         applyAquaticEffect(player, MobEffects.WATER_BREATHING);
-        applyAquaticEffect(player, MobEffects.DIG_SPEED);
         applyAquaticEffect(player, MobEffects.CONDUIT_POWER);
         applyAquaticEffect(player, MobEffects.DOLPHINS_GRACE);
     }

@@ -45,14 +45,6 @@ public class SlimekinEventHandler {
         }
     }
     
-    // 处理粘液族免疫摔落伤害
-    public static void handleFallDamage(net.minecraft.world.entity.Entity entity, float distance, float multiplier) {
-        // 粘液族免疫所有摔落伤害
-        if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.fallDistance = 0;
-        }
-    }
-    
     // 处理粘液族攻击时给目标添加缓慢效果
     public static void handlePlayerAttack(LivingEntity target) {
         // 给攻击目标添加缓慢II效果，持续2秒（40 ticks）
