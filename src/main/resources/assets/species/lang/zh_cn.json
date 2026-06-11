@@ -75,7 +75,35 @@
   "skill.species.on_cooldown": "§c技能冷却中！剩余 %d 秒",
   "skill.species.activated": "§a%s 已激活！",
   "skill.species.no_resource_health": "§c生命值不足，无法使用技能！",
+  "skill.species.no_resource_exp": "§c经验不足，无法使用技能！",
   
   "skill.species.catkin.name": "哈气",
-  "skill.species.catkin.description": "'哈！'"
+  "skill.species.catkin.description": "'哈！'",
+  
+  "skill.species.aigoth.name": "喵喵喵？",
+  "skill.species.aigoth.description": "喵嘿嘿",
+  
+  "skill.species.elf.name": "凋零之矢",
+  "skill.species.elf.description": "射出一支极高伤害的凋零之箭",
+  
+  "skill.species.plantkin.name": "自然恩泽",
+  "skill.species.plantkin.description": "获得生命恢复与饱和效果",
+  
+  "skill.species.wingedbeast.name": "振翅飞翔",
+  "skill.species.wingedbeast.description": "获得创造飞行能力",
+  
+  "skill.species.slimekin.name": "粘液飞溅",
+  "skill.species.slimekin.description": "牺牲生命，溅射减速粘液",
+  
+  "skill.species.foxkin.name": "狐跃",
+  "skill.species.foxkin.description": "向前猛跃",
+  
+  "skill.species.dogkin.name": "嗜血狂暴",
+  "skill.species.dogkin.description": "进入狂暴状态，获得力量与急迫",
+  
+  "skill.species.human.name": "人之坚毅",
+  "skill.species.human.description": "获得短暂的坚韧意志",
+  
+  "skill.species.aquatic.name": "人鱼之歌",
+  "skill.species.aquatic.description": "唱出人鱼的旋律，治愈周围生灵"
 }

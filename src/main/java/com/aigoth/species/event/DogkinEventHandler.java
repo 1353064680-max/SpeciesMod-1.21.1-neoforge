@@ -34,22 +34,18 @@ public class DogkinEventHandler {
             // 满月时获得力量I和饥饿I效果（始终生效）
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, 0, false, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 0, false, false, false));
-        } else {
-            // 移除满月效果（只移除种族给予的效果）
-            removeDogkinEffect(player, MobEffects.DAMAGE_BOOST);
-            removeDogkinEffect(player, MobEffects.HUNGER);
         }
+        // 注意：不再主动移除月相效果，让其自然过期
+        // 这样可以避免误清除技能给予的相同类型效果
         
         // 检查是否为月食（新月时的月食）（被动效果，始终生效）
         if (world.isNight() && world.getMoonPhase() == 4) {
             // 月食时获得虚弱I和抗性提升I效果（始终生效）
             player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, false, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 0, false, false, false));
-        } else {
-            // 移除月食效果（只移除种族给予的效果）
-            removeDogkinEffect(player, MobEffects.WEAKNESS);
-            removeDogkinEffect(player, MobEffects.DAMAGE_RESISTANCE);
         }
+        // 注意：不再主动移除月食效果，让其自然过期
+        // 这样可以避免误清除技能给予的相同类型效果
         
         // 注意：犬族的所有效果都是被动特性，不受racialEffectsEnabled参数控制
         // 该参数保留以维持接口一致性
@@ -92,14 +88,6 @@ public class DogkinEventHandler {
             if (player.tickCount % 20 == 0 && Math.random() < 0.3) {
                 foodData.addExhaustion(0.5f);
             }
-        }
-    }
-    
-    private static void removeDogkinEffect(Player player, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
-        // 只移除由种族系统添加的效果（通过检查效果的可见性来判断是否为种族系统添加的）
-        MobEffectInstance effectInstance = player.getEffect(effect);
-        if (effectInstance != null && !effectInstance.isVisible()) {
-            player.removeEffect(effect);
         }
     }
 }

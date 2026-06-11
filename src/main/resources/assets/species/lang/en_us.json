@@ -75,7 +75,35 @@
   "skill.species.on_cooldown": "§cSkill on cooldown! %d seconds remaining",
   "skill.species.activated": "§a%s activated!",
   "skill.species.no_resource_health": "§cNot enough health to use skill!",
+  "skill.species.no_resource_exp": "§cNot enough experience to use skill!",
   
   "skill.species.catkin.name": "Hiss",
-  "skill.species.catkin.description": "'Hiss!'"
+  "skill.species.catkin.description": "'Hiss!'",
+  
+  "skill.species.aigoth.name": "Hiss",
+  "skill.species.aigoth.description": "'Hiss!'",
+  
+  "skill.species.elf.name": "Wither Arrow",
+  "skill.species.elf.description": "Shoot a high-damage wither arrow",
+  
+  "skill.species.plantkin.name": "Nature's Blessing",
+  "skill.species.plantkin.description": "Receive regeneration and saturation effects",
+  
+  "skill.species.wingedbeast.name": "Winged Flight",
+  "skill.species.wingedbeast.description": "Gain creative flight ability",
+  
+  "skill.species.slimekin.name": "Slime Splash",
+  "skill.species.slimekin.description": "Sacrifice health to splash slowing slime",
+  
+  "skill.species.foxkin.name": "Fox Leap",
+  "skill.species.foxkin.description": "Leap forward",
+  
+  "skill.species.dogkin.name": "Bloodthirsty Fury",
+  "skill.species.dogkin.description": "Enter fury state, gain strength and haste",
+  
+  "skill.species.human.name": "Human Resilience",
+  "skill.species.human.description": "Gain brief resilience",
+  
+  "skill.species.aquatic.name": "Mermaid Song",
+  "skill.species.aquatic.description": "Sing mermaid melody to heal allies"
 }

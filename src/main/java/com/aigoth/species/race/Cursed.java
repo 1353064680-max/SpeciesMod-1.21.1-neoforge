@@ -11,8 +11,8 @@ public class Cursed extends Race {
               Component.translatable("race.species.cursed.short_desc"),
               Component.translatable("race.species.cursed.benefits"),
               Component.translatable("race.species.cursed.drawbacks"),
-              Component.translatable("skill.species.cursed.name"),
-              Component.translatable("skill.species.cursed.description"));
+              Component.literal(""),
+              Component.literal(""));
     }
 
     @Override

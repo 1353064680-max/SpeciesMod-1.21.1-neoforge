@@ -9,13 +9,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class WingedBeastEventHandler {
+    // 跟踪羽兽族玩家的飞行能力到期时间 (玩家UUID -> 到期tick)
+    private static final Map<String, Long> flightExpiryTimes = new HashMap<>();
     
     public static void applyRacialEffects(Player player, Race race, boolean racialEffectsEnabled) {
         // 确保传入的是羽兽族
         if (!"wingedbeast".equals(race.getRaceId())) {
             return;
         }
+        
+        // 检查并移除过期的飞行能力
+        checkAndRemoveExpiredFlight(player);
         
         // 使用统一的药水效果管理器应用可开关的效果（如缓降）
         RaceEffectManager.applyRaceEffects(player, race, racialEffectsEnabled);
@@ -44,5 +52,24 @@ public class WingedBeastEventHandler {
     // 羽兽族受到火焰伤害1.5倍
     public static float applyFireDamageMultiplier(float originalDamage) {
         return originalDamage * 1.5f;
+    }
+    
+    // 设置玩家的飞行能力到期时间
+    public static void setFlightExpiry(Player player, long expiryTick) {
+        flightExpiryTimes.put(player.getStringUUID(), expiryTick);
+    }
+    
+    // 检查并移除过期的飞行能力
+    private static void checkAndRemoveExpiredFlight(Player player) {
+        String uuid = player.getStringUUID();
+        Long expiryTick = flightExpiryTimes.get(uuid);
+        
+        if (expiryTick != null && player.level().getGameTime() >= expiryTick) {
+            // 飞行能力已过期，移除
+            player.getAbilities().flying = false;
+            player.getAbilities().mayfly = false;
+            player.onUpdateAbilities();
+            flightExpiryTimes.remove(uuid);
+        }
     }
 }

@@ -11,9 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 
@@ -154,6 +156,28 @@ public class RaceEventHandler {
     }
     
     // ================================
+    // 摔落事件处理
+    // ================================
+    
+    @SubscribeEvent
+    public static void onLivingFall(LivingFallEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            
+            // 检查是否为狐族且处于狐跃状态
+            if (cap.hasSelectedRace() && "foxkin".equals(cap.getSelectedRace().getRaceId())) {
+                long expiryTick = player.getPersistentData().getLong("foxkin_leap_expiry");
+                
+                // 如果当前时间小于到期时间，说明处于狐跃状态，取消摔落伤害
+                if (expiryTick > 0 && player.level().getGameTime() < expiryTick) {
+                    event.setCanceled(true);
+                    player.getPersistentData().remove("foxkin_leap_expiry");
+                }
+            }
+        }
+    }
+    
+    // ================================
     // 目标选择事件处理 (借鉴 Artifacts 方案)
     // ================================
     
@@ -212,6 +236,16 @@ public class RaceEventHandler {
         
         // 精灵族箭矢增强
         ElfEventHandler.onEntityJoinLevel(event);
+    }
+    
+    // ================================
+    // 投射物命中事件处理
+    // ================================
+    
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        // 精灵族凋零之矢命中效果
+        ElfEventHandler.onProjectileImpact(event);
     }
     
     // ================================

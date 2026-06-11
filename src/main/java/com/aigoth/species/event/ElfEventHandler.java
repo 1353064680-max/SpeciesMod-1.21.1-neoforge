@@ -6,10 +6,12 @@ import com.aigoth.species.effect.RaceEffectManager;
 import com.aigoth.species.race.Race;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 
 public class ElfEventHandler {
     
@@ -46,6 +48,23 @@ public class ElfEventHandler {
                 if (cap.hasSelectedRace() && "elf".equals(cap.getSelectedRace().getRaceId())) {
                     // 将基础伤害翻倍（倍率加成）
                     arrow.setBaseDamage(arrow.getBaseDamage() * 2.0);
+                }
+            }
+        }
+    }
+    
+    // 处理凋零之矢命中事件
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        // 检查是否为箭矢
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
+            // 检查是否是凋零之矢（通过 tag 标记）
+            if (arrow.getTags().contains("wither_arrow")) {
+                // 检查命中目标是否为生物
+                if (event.getRayTraceResult() instanceof net.minecraft.world.phys.EntityHitResult entityHitResult) {
+                    if (entityHitResult.getEntity() instanceof LivingEntity target) {
+                        // 施加凋零 I 效果，持续 5 秒（100 ticks）（平衡性调整）
+                        target.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0, false, false, true));
+                    }
                 }
             }
         }
