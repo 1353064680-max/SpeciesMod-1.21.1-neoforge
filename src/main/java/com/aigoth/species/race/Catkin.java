@@ -10,7 +10,9 @@ public class Catkin extends Race {
     public Catkin() {
         super("catkin", Component.translatable("race.species.catkin"),
               Component.translatable("race.species.catkin.short_desc"),
-              Component.translatable("race.species.catkin.desc"));
+              Component.translatable("race.species.catkin.desc"),
+              Component.translatable("race.species.catkin.benefits"),
+              Component.translatable("race.species.catkin.drawbacks"));
     }
 
     @Override

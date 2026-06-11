@@ -16,20 +16,25 @@ public abstract class Race {
     protected final Component raceName;
     protected final Component shortDescription;
     protected final Component fullDescription;
+    protected final Component benefitsDescription;
+    protected final Component drawbacksDescription;
     // 属性修饰符存储（属性名 -> 修饰符）
     protected final Map<ResourceLocation, AttributeModifier> attributeModifiers = new HashMap<>();
 
-    public Race(String raceId, Component raceName, Component shortDescription, Component fullDescription) {
+    public Race(String raceId, Component raceName, Component shortDescription, Component fullDescription, 
+                Component benefitsDescription, Component drawbacksDescription) {
         this.raceId = raceId;
         this.raceName = raceName;
         this.shortDescription = shortDescription;
         this.fullDescription = fullDescription;
+        this.benefitsDescription = benefitsDescription;
+        this.drawbacksDescription = drawbacksDescription;
         initAttributes();
     }
     
     // 兼容旧版本构造函数
     public Race(String raceId, Component raceName, Component description) {
-        this(raceId, raceName, Component.literal(""), description);
+        this(raceId, raceName, Component.literal(""), description, Component.literal(""), Component.literal(""));
     }
 
     // 初始化种族属性（子类实现）
@@ -75,4 +80,6 @@ public abstract class Race {
     public Component getRaceName() { return raceName; }
     public Component getShortDescription() { return shortDescription; }
     public Component getFullDescription() { return fullDescription; }
+    public Component getBenefitsDescription() { return benefitsDescription; }
+    public Component getDrawbacksDescription() { return drawbacksDescription; }
 }

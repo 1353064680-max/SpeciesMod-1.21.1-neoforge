@@ -9,7 +9,9 @@ public class Foxkin extends Race {
     public Foxkin() {
         super("foxkin", Component.translatable("race.species.foxkin"),
               Component.translatable("race.species.foxkin.short_desc"),
-              Component.translatable("race.species.foxkin.desc"));
+              Component.translatable("race.species.foxkin.desc"),
+              Component.translatable("race.species.foxkin.benefits"),
+              Component.translatable("race.species.foxkin.drawbacks"));
     }
 
     @Override

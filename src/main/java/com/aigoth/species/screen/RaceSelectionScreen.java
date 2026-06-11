@@ -146,76 +146,37 @@ public class RaceSelectionScreen extends Screen {
             int descriptionTitleY = descriptionBoxY + 5;
             guiGraphics.drawCenteredString(font, Component.literal("说明:"), width / 2, descriptionTitleY, 0xFFFF00);
             
-            // 绘制详细说明（多行）
-            Component fullDescription = currentRace.getFullDescription();
+            // 绘制详细说明（增益和减益分开渲染）
             int descriptionStartY = descriptionTitleY + 15;
-            drawMultilineComponent(guiGraphics, fullDescription, 
-                                 descriptionBoxX + DESCRIPTION_BOX_PADDING, 
-                                 descriptionStartY, 
-                                 descriptionBoxInnerWidth);
-        }
-    }
-    
-    // 自定义方法绘制多行文本组件（支持格式化文本）
-    private void drawMultilineComponent(GuiGraphics guiGraphics, Component component, int x, int y, int maxWidth) {
-        String text = component.getString();
-        
-        // 分离增益和减益效果
-        List<String> benefits = new ArrayList<>();
-        List<String> drawbacks = new ArrayList<>();
-        
-        // 按逗号分割文本
-        String[] parts = text.split(",");
-        for (String part : parts) {
-            if (part.startsWith("+")) {
-                benefits.add(part);
-            } else if (part.startsWith("-")) {
-                drawbacks.add(part);
-            } else {
-                // 对于不以+或-开头的文本，根据上下文判断
-                if (benefits.isEmpty() && drawbacks.isEmpty()) {
-                    benefits.add(part);
-                } else if (!benefits.isEmpty()) {
-                    benefits.add(part);
-                } else {
-                    drawbacks.add(part);
+            
+            // 绘制增益效果（绿色）
+            Component benefits = currentRace.getBenefitsDescription();
+            if (benefits != null && !benefits.getString().isEmpty()) {
+                List<FormattedCharSequence> benefitLines = font.split(benefits, descriptionBoxInnerWidth);
+                for (FormattedCharSequence line : benefitLines) {
+                    int lineWidth = font.width(line);
+                    int lineX = descriptionBoxX + DESCRIPTION_BOX_PADDING + (descriptionBoxInnerWidth - lineWidth) / 2; // 居中显示
+                    guiGraphics.drawString(font, line, lineX, descriptionStartY, 0x55FF55, false); // 绿色
+                    descriptionStartY += font.lineHeight + 2;
+                }
+                descriptionStartY += 4; // 增益和减益之间的额外间距
+            }
+            
+            // 绘制减益效果（红色）
+            Component drawbacks = currentRace.getDrawbacksDescription();
+            if (drawbacks != null && !drawbacks.getString().isEmpty()) {
+                List<FormattedCharSequence> drawbackLines = font.split(drawbacks, descriptionBoxInnerWidth);
+                for (FormattedCharSequence line : drawbackLines) {
+                    int lineWidth = font.width(line);
+                    int lineX = descriptionBoxX + DESCRIPTION_BOX_PADDING + (descriptionBoxInnerWidth - lineWidth) / 2; // 居中显示
+                    guiGraphics.drawString(font, line, lineX, descriptionStartY, 0xFF5555, false); // 红色
+                    descriptionStartY += font.lineHeight + 2;
                 }
             }
         }
-        
-        // 绘制增益效果（绿色）
-        int currentY = y;
-        int lineHeight = font.lineHeight + 2;
-        
-        // 绘制增益部分
-        if (!benefits.isEmpty()) {
-            String benefitsText = String.join(",", benefits);
-            List<FormattedCharSequence> benefitLines = font.split(net.minecraft.network.chat.Component.literal("§a" + benefitsText), maxWidth);
-            for (FormattedCharSequence line : benefitLines) {
-                int lineWidth = font.width(line);
-                int lineX = x + (maxWidth - lineWidth) / 2; // 居中显示
-                guiGraphics.drawString(font, line, lineX, currentY, 0xFFFFFF, false);
-                currentY += lineHeight;
-            }
-        }
-        
-        // 如果既有增益又有减益，添加一行空隙
-        if (!benefits.isEmpty() && !drawbacks.isEmpty()) {
-            currentY += lineHeight / 2;
-        }
-        
-        // 绘制减益部分
-        if (!drawbacks.isEmpty()) {
-            String drawbacksText = String.join(",", drawbacks);
-            List<FormattedCharSequence> drawbackLines = font.split(net.minecraft.network.chat.Component.literal("§c" + drawbacksText), maxWidth);
-            for (FormattedCharSequence line : drawbackLines) {
-                int lineWidth = font.width(line);
-                int lineX = x + (maxWidth - lineWidth) / 2; // 居中显示
-                guiGraphics.drawString(font, line, lineX, currentY, 0xFFFFFF, false);
-                currentY += lineHeight;
-            }
-        }
     }
+    
+
     
     @Override
     public boolean isPauseScreen() {

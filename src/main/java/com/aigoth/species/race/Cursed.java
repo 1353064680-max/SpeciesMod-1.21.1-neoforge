@@ -10,7 +10,9 @@ public class Cursed extends Race {
     public Cursed() {
         super("cursed", Component.translatable("race.species.cursed"),
               Component.translatable("race.species.cursed.short_desc"),
-              createDescription());
+              createDescription(),
+              Component.translatable("race.species.cursed.benefits"),
+              Component.translatable("race.species.cursed.drawbacks"));
     }
 
     private static MutableComponent createDescription() {

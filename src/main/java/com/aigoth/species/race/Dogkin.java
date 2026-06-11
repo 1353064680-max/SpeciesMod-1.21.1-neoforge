@@ -9,7 +9,9 @@ public class Dogkin extends Race {
     public Dogkin() {
         super("dogkin", Component.translatable("race.species.dogkin"),
               Component.translatable("race.species.dogkin.short_desc"),
-              Component.translatable("race.species.dogkin.desc"));
+              Component.translatable("race.species.dogkin.desc"),
+              Component.translatable("race.species.dogkin.benefits"),
+              Component.translatable("race.species.dogkin.drawbacks"));
     }
 
     @Override

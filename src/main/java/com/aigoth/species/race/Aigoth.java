@@ -9,7 +9,9 @@ public class Aigoth extends Race {
     public Aigoth() {
         super("aigoth", Component.translatable("race.species.aigoth"), 
               Component.translatable("race.species.aigoth.short_desc"),
-              Component.translatable("race.species.aigoth.desc"));
+              Component.translatable("race.species.aigoth.desc"),
+              Component.translatable("race.species.aigoth.benefits"),
+              Component.translatable("race.species.aigoth.drawbacks"));
     }
 
     @Override

@@ -9,7 +9,9 @@ public class Elf extends Race {
     public Elf() {
         super("elf", Component.translatable("race.species.elf"), 
               Component.translatable("race.species.elf.short_desc"),
-              Component.translatable("race.species.elf.desc"));
+              Component.translatable("race.species.elf.desc"),
+              Component.translatable("race.species.elf.benefits"),
+              Component.translatable("race.species.elf.drawbacks"));
     }
 
     @Override
