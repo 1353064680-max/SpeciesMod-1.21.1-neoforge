@@ -59,15 +59,18 @@ public class DogkinEventHandler {
                 && !event.getLevel().isClientSide()) {
             // 为骷髅类生物添加避开犬族玩家的AI目标
             // 骷髅类生物会避开犬族玩家（距离10格内，逃离速度1.5）
-            if (entity instanceof Skeleton skeleton) {
-                skeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(skeleton, Player.class, 10.0F, 1.5D, 1.5D,
-                    player -> isDogkinPlayer((Player) player)));
-            } else if (entity instanceof WitherSkeleton witherSkeleton) {
-                witherSkeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(witherSkeleton, Player.class, 10.0F, 1.5D, 1.5D,
-                    player -> isDogkinPlayer((Player) player)));
-            } else if (entity instanceof Stray stray) {
-                stray.goalSelector.addGoal(3, new AvoidEntityGoal<>(stray, Player.class, 10.0F, 1.5D, 1.5D,
-                    player -> isDogkinPlayer((Player) player)));
+            switch (entity) {
+                case Skeleton skeleton ->
+                        skeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(skeleton, Player.class, 10.0F, 1.5D, 1.5D,
+                                player -> isDogkinPlayer((Player) player)));
+                case WitherSkeleton witherSkeleton ->
+                        witherSkeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(witherSkeleton, Player.class, 10.0F, 1.5D, 1.5D,
+                                player -> isDogkinPlayer((Player) player)));
+                case Stray stray ->
+                        stray.goalSelector.addGoal(3, new AvoidEntityGoal<>(stray, Player.class, 10.0F, 1.5D, 1.5D,
+                                player -> isDogkinPlayer((Player) player)));
+                default -> {
+                }
             }
         }
     }
