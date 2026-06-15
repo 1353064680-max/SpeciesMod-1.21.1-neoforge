@@ -9,11 +9,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Human extends Race {
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public Human() {
         super("human", Component.translatable("race.species.human"),
@@ -52,16 +49,13 @@ public class Human extends Race {
     public void executeSkill(ServerPlayer player) {
         // 1. 扣除饱食度（8.0 疲劳值 = 2 点饱食度 = 1格）
         player.getFoodData().addExhaustion(8.0f);
-        LOGGER.debug("玩家 {} 使用人之坚毅，扣除 8.0 疲劳值（1格饱食度）", player.getName().getString());
         
         // 2. 给予抗性提升效果，持续 10 秒（200 ticks）
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 0, false, false, false));
-        LOGGER.debug("玩家 {} 获得抗性提升I效果，持续 10 秒", player.getName().getString());
         
         // 3. 播放音效（盾牌格挡声 - 体现防御性）
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
             SoundEvents.SHIELD_BLOCK, player.getSoundSource(), 1.0F, 1.0F);
-        LOGGER.debug("播放人之坚毅音效");
         
         // 4. 生成粒子效果（附魔粒子 - 体现意志力量）
         if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
@@ -78,6 +72,5 @@ public class Human extends Race {
                 );
             }
         }
-        LOGGER.debug("生成人之坚毅粒子效果");
     }
 }

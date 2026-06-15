@@ -9,11 +9,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Foxkin extends Race {
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public Foxkin() {
         super("foxkin", Component.translatable("race.species.foxkin"),
@@ -60,7 +57,6 @@ public class Foxkin extends Race {
     public void executeSkill(ServerPlayer player) {
         // 1. 扣除饱食度（16.0 疲劳值 = 4 点饱食度 = 2格）
         player.getFoodData().addExhaustion(16.0f);
-        LOGGER.debug("玩家 {} 使用狐跃，扣除 16.0 疲劳值（2格饱食度）", player.getName().getString());
         
         // 2. 计算跳跃方向（面向准星方向）
         float yaw = player.getYRot();
@@ -89,23 +85,17 @@ public class Foxkin extends Race {
         // 标记玩家为"已跳跃"状态，防止被地面检测重置
         player.hurtMarked = true;
         
-        LOGGER.debug("玩家 {} 执行狐跃，速度: ({}, {}, {})", player.getName().getString(), 
-            jumpVelocity.x, jumpVelocity.y, jumpVelocity.z);
-        
         // 3. 标记玩家为"狐跃状态"，用于在事件处理器中取消摔落伤害
         // 记录狐跃的到期时间（当前tick + 100 ticks = 5秒）
         long expiryTick = player.level().getGameTime() + 100;
         player.getPersistentData().putLong("foxkin_leap_expiry", expiryTick);
-        LOGGER.debug("玩家 {} 标记狐跃状态，到期时间: {}", player.getName().getString(), expiryTick);
         
         // 4. 给予速度 II 效果，持续 5 秒（100 ticks）
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 1, false, false, false));
-        LOGGER.debug("玩家 {} 获得速度II效果，持续 5 秒", player.getName().getString());
-        
+
         // 5. 播放音效（狐狸叫声）
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
             SoundEvents.FOX_AMBIENT, player.getSoundSource(), 1.0F, 1.0F);
-        LOGGER.debug("播放狐跃音效");
         
         // 6. 生成粒子效果（烟雾粒子）
         if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
@@ -122,6 +112,5 @@ public class Foxkin extends Race {
                 );
             }
         }
-        LOGGER.debug("生成狐跃粒子效果");
     }
 }

@@ -10,11 +10,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Aquatic extends Race {
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public Aquatic() {
         super("aquatic", Component.translatable("race.species.aquatic"), 
@@ -61,16 +58,13 @@ public class Aquatic extends Race {
     public void executeSkill(ServerPlayer player) {
         // 1. 扣除生命值（6.0 点 = 3颗心）
         player.hurt(player.damageSources().magic(), 6.0f);
-        LOGGER.debug("玩家 {} 使用人鱼之歌，扣除 6.0 生命值（3颗心）", player.getName().getString());
         
         // 2. 扣除饱食度（24.0 疲劳值 = 6 点饱食度 = 3个鸡腿）
         player.getFoodData().addExhaustion(24.0f);
-        LOGGER.debug("玩家 {} 使用人鱼之歌，扣除 24.0 疲劳值（3格饱食度）", player.getName().getString());
         
         // 3. 查找半径10格内所有玩家
         double radius = 10.0;
-        int affectedCount = 0;
-        
+
         for (Player target : player.level().getEntitiesOfClass(Player.class, 
                 player.getBoundingBox().inflate(radius))) {
             // 净化目标的所有效果
@@ -84,16 +78,12 @@ public class Aquatic extends Race {
             
             // 给予伤害吸收 I（2颗黄心），持续 20 秒（400 ticks）
             target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 400, 0, false, false, false));
-            
-            affectedCount++;
+
         }
-        
-        LOGGER.info("人鱼之歌影响范围内 {} 个玩家，净化负面效果并施加增益", affectedCount);
         
         // 4. 播放音效（音符盒声音 - 体现歌声）
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
             SoundEvents.NOTE_BLOCK_HARP.value(), player.getSoundSource(), 1.0F, 1.0F);
-        LOGGER.debug("播放人鱼之歌音效");
         
         // 5. 生成粒子效果（附魔粒子 + 水滴粒子）
         if (player.level() instanceof ServerLevel serverLevel) {
@@ -122,7 +112,6 @@ public class Aquatic extends Race {
                 }
             }
         }
-        LOGGER.debug("生成人鱼之歌粒子效果");
     }
     
     /**
@@ -137,7 +126,6 @@ public class Aquatic extends Race {
         // 统一移除所有效果
         for (var effect : effectsToRemove) {
             player.removeEffect(effect);
-            LOGGER.debug("净化玩家 {} 的效果: {}", player.getName().getString(), effect.toString());
         }
     }
 }

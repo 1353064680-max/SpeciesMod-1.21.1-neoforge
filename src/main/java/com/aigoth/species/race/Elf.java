@@ -9,11 +9,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.projectile.Arrow;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Elf extends Race {
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public Elf() {
         super("elf", Component.translatable("race.species.elf"), 
@@ -60,11 +57,9 @@ public class Elf extends Race {
     public void executeSkill(ServerPlayer player) {
         // 1. 扣除生命值（2颗心 = 4.0点）
         player.hurt(player.damageSources().magic(), 4.0f);
-        LOGGER.debug("玩家 {} 使用凋零之矢，扣除 4.0 生命值（2颗心）", player.getName().getString());
         
         // 2. 扣除饱食度（40.0 疲劳值 = 10 点饱食度 = 5格）（平衡性调整）
         player.getFoodData().addExhaustion(40.0f);
-        LOGGER.debug("玩家 {} 使用凋零之矢，扣除 40.0 疲劳值（5格饱食度）", player.getName().getString());
         
         // 3. 创建箭实体并设置属性
         Arrow arrow = new Arrow(EntityType.ARROW, player.level());
@@ -87,12 +82,10 @@ public class Elf extends Race {
         
         // 4. 生成箭实体
         player.level().addFreshEntity(arrow);
-        LOGGER.debug("玩家 {} 射出凋零之矢，伤害10.0，速度3.0，无下坠", player.getName().getString());
         
         // 5. 播放音效（弓箭射击声）
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
             SoundEvents.ARROW_SHOOT, player.getSoundSource(), 1.0F, 1.0F);
-        LOGGER.debug("播放弓箭射击音效");
         
         // 6. 生成粒子效果（魔法粒子）
         if (player.level() instanceof ServerLevel serverLevel) {
@@ -109,6 +102,5 @@ public class Elf extends Race {
                 );
             }
         }
-        LOGGER.debug("生成魔法粒子效果");
     }
 }

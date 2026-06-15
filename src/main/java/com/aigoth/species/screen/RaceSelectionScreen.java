@@ -22,6 +22,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class RaceSelectionScreen extends Screen {
     private final List<Race> races = new ArrayList<>();
     private int selectedIndex = 0;
+    private double scrollOffset = 0; // 滚动偏移量
     // 添加用于界面元素定位的常量
     private static final int TITLE_Y = 20;
     private static final int RACE_NAME_Y = 50;
@@ -142,8 +143,16 @@ public class RaceSelectionScreen extends Screen {
                            descriptionBoxX + descriptionBoxWidth, descriptionBoxY + descriptionBoxHeight, 
                            0xFFAAAAAA); // 右边框
             
+            // 绘制描述框内容（带裁剪和滚动）
+            guiGraphics.enableScissor(
+                descriptionBoxX + 2,
+                descriptionBoxY + 2,
+                descriptionBoxX + descriptionBoxWidth - 2,
+                descriptionBoxY + descriptionBoxHeight - 2
+            );
+            
             // 绘制详细说明标题
-            int descriptionTitleY = descriptionBoxY + 5;
+            int descriptionTitleY = descriptionBoxY + DESCRIPTION_BOX_PADDING - (int)scrollOffset;
             guiGraphics.drawCenteredString(font, Component.literal("说明:"), width / 2, descriptionTitleY, 0xFFFF00);
             
             // 绘制详细说明（增益和减益分开渲染）
@@ -176,7 +185,7 @@ public class RaceSelectionScreen extends Screen {
             
             // 绘制技能信息（如果有主动技能）
             if (currentRace.hasActiveSkill()) {
-                descriptionStartY += 8; // 与减益效果的间距
+                descriptionStartY += 6; // 与减益效果的间距
                 
                 // 绘制技能标题
                 guiGraphics.drawCenteredString(font, Component.literal("主动技能:"), width / 2, descriptionStartY, 0xFFFF00);
@@ -197,7 +206,7 @@ public class RaceSelectionScreen extends Screen {
                 // 绘制技能描述
                 Component skillDesc = currentRace.getSkillDescription();
                 if (skillDesc != null && !skillDesc.getString().isEmpty()) {
-                    descriptionStartY += 4;
+                    descriptionStartY += 2;
                     List<FormattedCharSequence> descLines = font.split(skillDesc, descriptionBoxInnerWidth);
                     for (FormattedCharSequence line : descLines) {
                         int lineWidth = font.width(line);
@@ -207,11 +216,72 @@ public class RaceSelectionScreen extends Screen {
                     }
                 }
             }
+            
+            // 禁用裁剪
+            guiGraphics.disableScissor();
         }
     }
     
-
-    
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        // 处理鼠标滚轮事件
+        if (!races.isEmpty()) {
+            Race currentRace = races.get(selectedIndex);
+            
+            // 计算描述框位置和尺寸
+            int descriptionBoxY = SHORT_DESC_Y + 30;
+            int descriptionBoxWidth = width - DESCRIPTION_BOX_MARGIN * 2;
+            int descriptionBoxHeight = height - descriptionBoxY - 60;
+            int descriptionBoxInnerWidth = descriptionBoxWidth - DESCRIPTION_BOX_PADDING * 2;
+            
+            // 计算总内容高度
+            int descriptionTitleY = descriptionBoxY + DESCRIPTION_BOX_PADDING;
+            int descriptionStartY = descriptionTitleY + 15;
+            
+            Component benefits = currentRace.getBenefitsDescription();
+            if (benefits != null && !benefits.getString().isEmpty()) {
+                List<FormattedCharSequence> benefitLines = font.split(benefits, descriptionBoxInnerWidth);
+                descriptionStartY += benefitLines.size() * (font.lineHeight + 2);
+                descriptionStartY += 4;
+            }
+            
+            Component drawbacks = currentRace.getDrawbacksDescription();
+            if (drawbacks != null && !drawbacks.getString().isEmpty()) {
+                List<FormattedCharSequence> drawbackLines = font.split(drawbacks, descriptionBoxInnerWidth);
+                descriptionStartY += drawbackLines.size() * (font.lineHeight + 2);
+            }
+            
+            if (currentRace.hasActiveSkill()) {
+                descriptionStartY += 6;
+                descriptionStartY += 12; // 技能标题
+                
+                Component skillName = currentRace.getSkillName();
+                if (skillName != null && !skillName.getString().isEmpty()) {
+                    List<FormattedCharSequence> nameLines = font.split(skillName, descriptionBoxInnerWidth);
+                    descriptionStartY += nameLines.size() * (font.lineHeight + 2);
+                }
+                
+                Component skillDesc = currentRace.getSkillDescription();
+                if (skillDesc != null && !skillDesc.getString().isEmpty()) {
+                    descriptionStartY += 2;
+                    List<FormattedCharSequence> descLines = font.split(skillDesc, descriptionBoxInnerWidth);
+                    descriptionStartY += descLines.size() * (font.lineHeight + 2);
+                }
+            }
+            
+            int totalContentHeight = descriptionStartY - descriptionBoxY;
+            int visibleHeight = descriptionBoxHeight - DESCRIPTION_BOX_PADDING * 2;
+            
+            // 如果内容超出可视区域，处理滚动
+            if (totalContentHeight > visibleHeight) {
+                int maxScroll = totalContentHeight - visibleHeight;
+                scrollOffset -= scrollY * 10.0; // 滚动速度
+                scrollOffset = Math.clamp(scrollOffset, 0, maxScroll);
+                return true;
+            }
+        }
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
     @Override
     public boolean isPauseScreen() {
         return false; // 不暂停游戏

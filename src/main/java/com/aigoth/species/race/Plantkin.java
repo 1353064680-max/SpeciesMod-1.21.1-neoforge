@@ -12,11 +12,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Plantkin extends Race {
-    private static final Logger LOGGER = LogManager.getLogger();
     
     public Plantkin() {
         super("plantkin", Component.translatable("race.species.plantkin"),
@@ -65,18 +62,15 @@ public class Plantkin extends Race {
         if (totalLevels < 1 && currentExp < player.getXpNeededForNextLevel()) {
             // 经验为0，无法使用技能
             player.sendSystemMessage(Component.translatable("skill.species.no_resource_exp"));
-            LOGGER.debug("玩家 {} 经验不足，无法使用自然恩泽技能", player.getName().getString());
             return;
         }
         
         // 扣除1级经验
         player.giveExperienceLevels(-1);
-        LOGGER.debug("玩家 {} 使用自然恩泽，扣除 1 级经验", player.getName().getString());
         
         // 2. 查找半径5格内所有玩家
         double radius = 5.0;
-        int affectedCount = 0;
-        
+
         for (Player target : player.level().getEntitiesOfClass(Player.class, 
                 player.getBoundingBox().inflate(radius))) {
             
@@ -85,11 +79,9 @@ public class Plantkin extends Race {
             
             // 给予饱和效果，持续 10 秒（200 ticks）
             target.addEffect(new MobEffectInstance(MobEffects.SATURATION, 200, 0, false, false, false));
-            
-            affectedCount++;
+
         }
-        
-        LOGGER.info("自然恩泽技能影响范围内 {} 个玩家，施加生命恢复III和饱和效果", affectedCount);
+
         
         // 3. 给范围内的每个玩家一个发光浆果
         ItemStack glowBerry = new ItemStack(Items.GLOW_BERRIES, 1);
@@ -104,13 +96,11 @@ public class Plantkin extends Race {
                 target.drop(glowBerry.copy(), false);
             }
         }
-        
-        LOGGER.debug("给范围内玩家发放发光浆果");
+
         
         // 4. 播放音效（自然/治愈音效 - 使用附魔台音效）
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), 
             SoundEvents.ENCHANTMENT_TABLE_USE, player.getSoundSource(), 1.0F, 1.0F);
-        LOGGER.debug("播放自然恩泽音效");
         
         // 5. 生成粒子效果（绿色魔法粒子）
         if (player.level() instanceof ServerLevel serverLevel) {
@@ -127,6 +117,5 @@ public class Plantkin extends Race {
                 );
             }
         }
-        LOGGER.debug("生成自然恩泽粒子效果");
     }
 }
