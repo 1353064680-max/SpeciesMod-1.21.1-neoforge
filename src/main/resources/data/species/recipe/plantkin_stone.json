@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "VVV",
+    "VNV",
+    "VVV"
+  ],
+  "key": {
+    "V": {
+      "item": "minecraft:vine"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "species:plantkin_stone",
+    "count": 1
+  }
+}

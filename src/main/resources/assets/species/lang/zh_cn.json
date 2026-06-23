@@ -65,6 +65,15 @@
   "item.species.plantkin_stone": "§b植物之石",
   "item.species.cursed_stone": "§b受诅之石",
   
+  "item.species.aigoth_tear": "§d哀歌凝泪",
+  "item.species.dismal_pearl": "§b黯淡珍珠",
+  
+  "item.species.aigoth_tear.tooltip": "传说中人鱼流下的泪水,晶莹剔透",
+  "item.species.aigoth_tear.tooltip2": "承载着深海的祝福与千年的哀伤",
+  "item.species.aigoth_tear.tooltip3": "哀歌的馈赠",
+  "item.species.aigoth_tear.use_message": "你听见了哀歌的祈祷，一股暖流涌遍全身...",
+  "item.species.aigoth_tear.transform_message": "哀歌之泪的力量彻底释放，化作了黯淡珍珠...",
+  
   "item.species.soul_stone.tooltip": "右键使用以重新选择种族",
   "item.species.soul_stone.tooltip2": "使用后将清除当前种族选择",
   "item.species.race_stone.tooltip": "右键使用以选择%s种族",

@@ -65,6 +65,15 @@
   "item.species.plantkin_stone": "Plantkin Stone",
   "item.species.cursed_stone": "Cursed Stone",
   
+  "item.species.aigoth_tear": "Aigoth's Tear",
+  "item.species.dismal_pearl": "Dismal Pearl",
+  
+  "item.species.aigoth_tear.tooltip": "Right-click to clear all effects and gain powerful buffs",
+  "item.species.aigoth_tear.tooltip2": "Will transform into Dismal Pearl when durability is exhausted",
+  "item.species.aigoth_tear.tooltip3": "Aigoth's gift",
+  "item.species.aigoth_tear.use_message": "You hear the prayer of the lament, a warm current flows through your body...",
+  "item.species.aigoth_tear.transform_message": "The power of Aigoth's Tear is fully released, transforming into Dismal Pearl...",
+  
   "item.species.soul_stone.tooltip": "Right-click to reselect race",
   "item.species.soul_stone.tooltip2": "Will clear your current race selection",
   "item.species.race_stone.tooltip": "Right-click to select %s race",

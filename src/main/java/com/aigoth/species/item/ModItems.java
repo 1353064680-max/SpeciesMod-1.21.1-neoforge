@@ -66,6 +66,14 @@ public class ModItems {
     public static final DeferredItem<RaceStoneItem> CURSED_STONE = ITEMS.register("cursed_stone", 
         () -> new RaceStoneItem(new Item.Properties().stacksTo(1), "cursed"));
     
+    // 哀歌凝泪
+    public static final DeferredItem<AigothTearItem> AIGOTH_TEAR = ITEMS.register("aigoth_tear", 
+        () -> new AigothTearItem(new Item.Properties().durability(5).rarity(net.minecraft.world.item.Rarity.EPIC)));
+    
+    // 黯淡珍珠
+    public static final DeferredItem<Item> DISMAL_PEARL = ITEMS.register("dismal_pearl", 
+        () -> new Item(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+    
     // 创建模组专属的创造模式标签页
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = 
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SpeciesMod.MOD_ID);

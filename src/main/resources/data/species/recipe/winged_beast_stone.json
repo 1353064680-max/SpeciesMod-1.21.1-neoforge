@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "FFF",
+    "FNF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "species:winged_beast_stone",
+    "count": 1
+  }
+}

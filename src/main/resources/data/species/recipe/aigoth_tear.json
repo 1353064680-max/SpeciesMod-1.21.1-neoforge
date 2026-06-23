@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NHN",
+    "HPH",
+    "NHN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "H": {
+      "item": "minecraft:heart_of_the_sea"
+    },
+    "P": {
+      "item": "species:dismal_pearl"
+    }
+  },
+  "result": {
+    "id": "species:aigoth_tear",
+    "count": 1
+  }
+}

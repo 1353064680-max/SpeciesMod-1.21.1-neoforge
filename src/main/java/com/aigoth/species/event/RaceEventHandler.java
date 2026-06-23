@@ -3,6 +3,7 @@ package com.aigoth.species.event;
 import com.aigoth.species.capability.PlayerSpeciesCapability;
 import com.aigoth.species.capability.PlayerSpeciesImpl;
 import com.aigoth.species.effect.RaceEffectManager;
+import com.aigoth.species.item.ModItems;
 import com.aigoth.species.race.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Phantom;
@@ -12,6 +13,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
@@ -20,6 +22,42 @@ import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 
 public class RaceEventHandler {
+    
+    // ================================
+    // 实体死亡事件处理
+    // ================================
+    
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        // 仅在服务端处理
+        if (event.getEntity().level().isClientSide) return;
+        
+        // 获取击杀来源
+        net.minecraft.world.damagesource.DamageSource source = event.getSource();
+        
+        // 检查击杀者是否为玩家
+        if (!(source.getEntity() instanceof Player player)) return;
+        
+        // 远古守卫者 -> 10% 概率掉落黯淡珍珠
+        if (event.getEntity() instanceof net.minecraft.world.entity.monster.ElderGuardian) {
+            if (player.level().getRandom().nextFloat() < 0.1f) {
+                ItemStack dismalPearl = new ItemStack(ModItems.DISMAL_PEARL.get(), 1);
+                boolean added = player.getInventory().add(dismalPearl);
+                if (!added) {
+                    player.drop(dismalPearl, false);
+                }
+            }
+        }
+        
+        // 末影龙 -> 100% 掉落灵魂之石
+        if (event.getEntity() instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon) {
+            ItemStack soulStone = new ItemStack(ModItems.SOUL_STONE.get(), 1);
+            boolean added = player.getInventory().add(soulStone);
+            if (!added) {
+                player.drop(soulStone, false);
+            }
+        }
+    }
     
     // ================================
     // 受伤事件处理
