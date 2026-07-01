@@ -16,6 +16,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import com.aigoth.species.capability.PlayerSpeciesCapability;
+import com.aigoth.species.capability.PlayerSpeciesImpl;
+
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
@@ -97,20 +100,23 @@ public class AigothTearItem extends Item {
             true // true 表示发送到 action bar
         );
         
-        // 6. 消耗耐久
+        // 6. 消耗耐久（人鱼猫族不消耗耐久）
         if (!player.getAbilities().instabuild) {
-            // 7. 检查耐久是否即将耗尽（在增加耐久之前判断）
-            boolean willBreak = stack.getDamageValue() + 1 >= stack.getMaxDamage();
+            PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            boolean isAigoth = cap.hasSelectedRace() && "aigoth".equals(cap.getSelectedRace().getRaceId());
             
-            // 增加耐久
-            stack.setDamageValue(stack.getDamageValue() + 1);
-            
-            // 如果即将耗尽，先转化再让原版逻辑处理物品销毁
-            if (willBreak) {
-                // 耐久耗尽，转化为黯淡珍珠
-                transformToDismalPearl(player);
-                // 手动将物品从玩家手中移除
-                stack.shrink(1);
+            if (!isAigoth) {
+                // 检查耐久是否即将耗尽（在增加耐久之前判断）
+                boolean willBreak = stack.getDamageValue() + 1 >= stack.getMaxDamage();
+                
+                // 增加耐久
+                stack.setDamageValue(stack.getDamageValue() + 1);
+                
+                // 如果即将耗尽，转化为黯淡珍珠
+                if (willBreak) {
+                    transformToDismalPearl(player);
+                    stack.shrink(1);
+                }
             }
         }
         

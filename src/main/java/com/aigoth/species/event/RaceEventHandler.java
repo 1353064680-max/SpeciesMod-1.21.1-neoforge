@@ -38,9 +38,13 @@ public class RaceEventHandler {
         // 检查击杀者是否为玩家
         if (!(source.getEntity() instanceof Player player)) return;
         
-        // 远古守卫者 -> 10% 概率掉落黯淡珍珠
+        // 远古守卫者 -> 黯淡珍珠掉落
         if (event.getEntity() instanceof net.minecraft.world.entity.monster.ElderGuardian) {
-            if (player.level().getRandom().nextFloat() < 0.1f) {
+            PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            boolean isAigoth = cap.hasSelectedRace() && "aigoth".equals(cap.getSelectedRace().getRaceId());
+            
+            // 人鱼猫族 100% 掉落，其他种族 10% 概率
+            if (isAigoth || player.level().getRandom().nextFloat() < 0.1f) {
                 ItemStack dismalPearl = new ItemStack(ModItems.DISMAL_PEARL.get(), 1);
                 boolean added = player.getInventory().add(dismalPearl);
                 if (!added) {
