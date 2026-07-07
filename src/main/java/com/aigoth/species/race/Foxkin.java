@@ -58,25 +58,17 @@ public class Foxkin extends Race {
         // 1. 扣除饱食度（16.0 疲劳值 = 4 点饱食度 = 2格）
         player.getFoodData().addExhaustion(16.0f);
         
-        // 2. 计算跳跃方向（面向准星方向）
-        float yaw = player.getYRot();
-        
-        // 将角度转换为弧度（Minecraft Yaw: 0=南, 90=西, 180=北, 270=东）
-        // 需要转换为标准数学角度并取反方向
-        float yawRad = (float) Math.toRadians(-yaw);
-        
-        // 计算水平方向的单位向量
-        double forwardX = -Math.sin(yawRad);
-        double forwardZ = Math.cos(yawRad);
+        // 2. 计算跳跃方向（使用玩家面朝方向）
+        Vec3 lookAngle = player.getLookAngle();
         
         // 设置跳跃速度（向前 + 向上）
-        double horizontalSpeed = 1.2;  // 水平速度（增强）
-        double verticalSpeed = 0.8;    // 垂直速度（约4-5格高，增强）
+        double horizontalSpeed = 1.2;  // 水平速度
+        double verticalSpeed = 0.8;    // 垂直速度（约4-5格高）
         
         Vec3 jumpVelocity = new Vec3(
-            forwardX * horizontalSpeed,
+            lookAngle.x * horizontalSpeed,
             verticalSpeed,
-            forwardZ * horizontalSpeed
+            lookAngle.z * horizontalSpeed
         );
         
         // 应用跳跃速度（直接设置，不累加）

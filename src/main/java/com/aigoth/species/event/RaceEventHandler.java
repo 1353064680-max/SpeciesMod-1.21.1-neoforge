@@ -228,10 +228,24 @@ public class RaceEventHandler {
         // 仅在服务端处理，确保权威性
         if (event.getEntity().level().isClientSide) return;
 
-        if (event.getEntity() instanceof net.minecraft.world.entity.monster.Creeper) {
-            if (event.getNewAboutToBeSetTarget() instanceof Player player) {
-                PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
-                if (cap.hasSelectedRace() && ("catkin".equals(cap.getSelectedRace().getRaceId()) || "aigoth".equals(cap.getSelectedRace().getRaceId()))) {
+        if (event.getNewAboutToBeSetTarget() instanceof Player player) {
+            PlayerSpeciesImpl cap = player.getData(PlayerSpeciesCapability.PLAYER_SPECIES);
+            if (!cap.hasSelectedRace()) return;
+            String raceId = cap.getSelectedRace().getRaceId();
+            
+            // 猫族/人鱼猫族 -> 苦力怕不目标
+            if (event.getEntity() instanceof net.minecraft.world.entity.monster.Creeper) {
+                if ("catkin".equals(raceId) || "aigoth".equals(raceId)) {
+                    event.setCanceled(true);
+                }
+            }
+            
+            // 犬族 -> 骷髅类生物不目标
+            if ("dogkin".equals(raceId)) {
+                if (event.getEntity() instanceof net.minecraft.world.entity.monster.Skeleton
+                    || event.getEntity() instanceof net.minecraft.world.entity.monster.WitherSkeleton
+                    || event.getEntity() instanceof net.minecraft.world.entity.monster.Stray
+                    || event.getEntity() instanceof net.minecraft.world.entity.monster.Bogged) {
                     event.setCanceled(true);
                 }
             }
