@@ -45,8 +45,13 @@ public class WingedBeastEventHandler {
     
     // 处理羽兽族睡醒下蛋逻辑
     public static void handlePlayerWakeUp(Player player) {
-        // 玩家睡醒时必定生成一个鸡蛋
-        player.spawnAtLocation(new ItemStack(Items.EGG), 1.0f);
+        // 只有睡到早上才下蛋（检查当前时间是否为早晨）
+        // Minecraft 时间：0=早上6点, 6000=中午, 12000=晚上7点, 18000=午夜
+        long timeOfDay = player.level().getDayTime() % 24000L;
+        if (timeOfDay < 12000L) {
+            // 早晨时段（6:00 ~ 18:00），说明玩家睡过了夜晚
+            player.spawnAtLocation(new ItemStack(Items.EGG), 1.0f);
+        }
     }
     
     // 羽兽族受到火焰伤害1.5倍
